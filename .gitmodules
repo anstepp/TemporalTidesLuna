@@ -1,0 +1,3 @@
+[submodule "lejaren"]
+	path = lejaren
+	url = git@github.com:anstepp/lejaren.git

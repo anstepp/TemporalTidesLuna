@@ -1,4 +1,4 @@
-from pytest import *
+import pytest 
 
 def test_launch():
-	pass
+	assert(True)

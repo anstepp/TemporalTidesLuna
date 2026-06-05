@@ -1,4 +1,4 @@
 from pytest import *
 
-test_launch():
+def test_launch():
 	pass

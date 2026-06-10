@@ -1,6 +1,6 @@
 import pytest 
 
-from src.main import arg_list
+from sample_feature import arg_list
 
 def test_launch():
 	assert(True)

@@ -13,7 +13,7 @@ dependencies = [
     "scipy (>=1.17.1,<2.0.0)"
 ]
 
-[tool.pytest]
+[tool.pytest.ini_options]
 minversion = "9.0"
 addopts = ["-ra", "-q"]
 testpaths = [
@@ -21,7 +21,7 @@ testpaths = [
     "integration",
 ]
 
-pythonproject = ["/src"]
+pythonpath = ["src"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

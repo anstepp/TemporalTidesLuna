@@ -8,8 +8,20 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "pytest (>=9.0.3,<10.0.0)",
+    "numpy (>=2.4.6,<3.0.0)",
+    "scipy (>=1.17.1,<2.0.0)"
 ]
 
+[tool.pytest]
+minversion = "9.0"
+addopts = ["-ra", "-q"]
+testpaths = [
+    "tests",
+    "integration",
+]
+
+pythonproject = ["/src"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

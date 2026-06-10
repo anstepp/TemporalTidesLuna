@@ -31,5 +31,4 @@ jobs:
 
       - name: Test with pytest
         run: |
-          source .venv/bin/activate
-          pytest
+          poetry run pytest

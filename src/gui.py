@@ -12,11 +12,25 @@ class TemporalTidesLunaApp(tk.Tk):
         super().__init__(parent)
         self.parent = parent
         self.title("Temporal Tides Luna")
-        self.view = self.TemporalTidesView(None)
+        self.infile = tk.StringVar()
+        self.view = self.TemporalTidesView()
+        self.model = self.TemporalTidesModel()
+        self.controller = self.TemporalTidesController()
 
-    class TemporalTidesView(tk.Tk):
-        def __init__(self, parent):
-            super().__init__(parent)
+    #View
+    class TemporalTidesView:
+        """
+            Display GUI from here. No logic, no storage.
+
+            Functions:
+            
+                init = constructor
+
+                _show_display = show the gui
+                    args: none
+        """
+        def __init__(self):
+            super().__init__()
 
             self.presenter = None
 
@@ -24,29 +38,42 @@ class TemporalTidesLunaApp(tk.Tk):
 
         def _show_display(self):
             pass
+    
+    # Model
+    class TemporalTidesModel:
+        """
+            Logic here. We will keep lejaren imports at a minimum, and do that work in separate files.
 
-    def on_submit(self, result_container):
-        # Perform your operational check
-        if isinstance(entry.get(), str):
-            if re_search(r'*\.musicxml', entry.get()):
-                result_container["success"] = True
-                result_container["msg"] = "Actual Music XML File"
-                root.destroy() 
-        else:
-            result_container["success"] = False
-            result_container["msg"] = "Not String"
-            # Keep GUI open for another attempt
+            Functions:
+            
+                init = constructor
+        """
+        def __init__(self):
+            pass
 
-    def check_result(self, state):
+    # Controller
+    class TemporalTidesController:
+        """
+            We will put bindings here to link the GUI (view) to the Logic (Model).
 
-        global entry
-        entry = tk.Entry(root)
-        entry.pack()
-        
-        # Pass a mutable dict into the lambda
-        btn = tk.Button(root, text="Submit", command=lambda: self.on_submit(state))
-        btn.pack()
-        
-        root.mainloop()
-        return state
+            Functions:
+                init = constructor
+        """
+        def __init__(self):
+            self.var = 1
+
+        def on_submit(self, result_container):
+            # Perform your operational check
+            if isinstance(self.infile.get(), str):
+                if re_search(r'*\.musicxml', self.infile.get()):
+                    result_container["success"] = True
+                    result_container["msg"] = "Actual Music XML File"
+                    root.destroy() 
+            else:
+                result_container["success"] = False
+                result_container["msg"] = "Not String"
+                # Keep GUI open for another attempt
+
+        def check_result(self, state):
+            return state
 

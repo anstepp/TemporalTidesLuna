@@ -2,7 +2,11 @@ import pytest
 
 from src.gui import TemporalTidesLunaApp
 
-function_list = ["check_result", "on_submit"]
+function_list = {
+	"controller": ["check_result", "on_submit"],
+	"model": [],
+	"view": ["_show_display"],
+	}
 
 class TestTemporalTidesLunaApp:
 
@@ -12,6 +16,9 @@ class TestTemporalTidesLunaApp:
 
 	def test_methods_present(self, temporal_tides_app):
 		# Ensure common member methods exist so grouped tests can call them
-		for function_to_check in function_list:
-			assert hasattr(temporal_tides_app, function_to_check)
+		for part, functions in function_list.items():
+			assert hasattr(temporal_tides_app, part)
+			sub_class = getattr(temporal_tides_app, part)
+			for function in functions:			
+				assert hasattr(sub_class, function)
 

@@ -3,7 +3,6 @@ import tkinter as tk
 
 from src.gui import TemporalTidesLunaApp
 
-
 @pytest.fixture(scope="class")
 def temporal_tides_app(request):
     """Create a hidden TK app instance for tests and ensure cleanup.

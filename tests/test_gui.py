@@ -2,7 +2,7 @@ import pytest
 
 from src.gui import TemporalTidesLunaApp
 
-function_list = ["check_result", "on_submit", "show_display"]
+function_list = ["check_result", "on_submit"]
 
 class TestTemporalTidesLunaApp:
 

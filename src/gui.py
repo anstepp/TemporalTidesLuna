@@ -12,9 +12,18 @@ class TemporalTidesLunaApp(tk.Tk):
         super().__init__(parent)
         self.parent = parent
         self.title("Temporal Tides Luna")
+        self.view = self.TemporalTidesView(None)
 
-    def show_display(self):
-        pass
+    class TemporalTidesView(tk.Tk):
+        def __init__(self, parent):
+            super().__init__(parent)
+
+            self.presenter = None
+
+            self._show_display()
+
+        def _show_display(self):
+            pass
 
     def on_submit(self, result_container):
         # Perform your operational check
@@ -22,7 +31,7 @@ class TemporalTidesLunaApp(tk.Tk):
             if re_search(r'*\.musicxml', entry.get()):
                 result_container["success"] = True
                 result_container["msg"] = "Actual Music XML File"
-                root.destroy() # Close GUI upon success
+                root.destroy() 
         else:
             result_container["success"] = False
             result_container["msg"] = "Not String"

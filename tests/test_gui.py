@@ -2,6 +2,7 @@ import pytest
 
 from src.gui import TemporalTidesLunaApp
 
+function_list = ["check_result", "on_submit", "show_display"]
 
 class TestTemporalTidesLunaApp:
 
@@ -11,6 +12,6 @@ class TestTemporalTidesLunaApp:
 
 	def test_methods_present(self, temporal_tides_app):
 		# Ensure common member methods exist so grouped tests can call them
-		assert hasattr(temporal_tides_app, "check_result") or hasattr(temporal_tides_app, "on_submit")
-
+		for function_to_check in function_list:
+			assert hasattr(temporal_tides_app, function_to_check)
 

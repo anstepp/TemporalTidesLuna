@@ -13,7 +13,10 @@ class TemporalTidesLunaApp(tk.Tk):
         self.parent = parent
         self.title("Temporal Tides Luna")
 
-    def on_submit(result_container):
+    def show_display(self):
+        pass
+
+    def on_submit(self, result_container):
         # Perform your operational check
         if isinstance(entry.get(), str):
             if re_search(r'*\.musicxml', entry.get()):

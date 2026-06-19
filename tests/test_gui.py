@@ -3,7 +3,7 @@ import pytest
 from src.gui import TemporalTidesLunaApp
 
 function_list = {
-	"controller": ["check_result", "on_submit"],
+	"controller": ["check_result", "on_submit", "button_check"],
 	"model": [],
 	"view": ["_show_display"],
 	}

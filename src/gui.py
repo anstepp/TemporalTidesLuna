@@ -59,7 +59,7 @@ class TemporalTidesLunaApp(tk.Tk):
             Functions:
                 init = constructor
         """
-        def __init__(self):
+        def __init__(self): 
             self.var = 1
 
         def on_submit(self, result_container):
@@ -76,4 +76,7 @@ class TemporalTidesLunaApp(tk.Tk):
 
         def check_result(self, state):
             return state
+        
+        def is_this_one(self, add_int=0) -> int:
+            return self.var + add_int
 

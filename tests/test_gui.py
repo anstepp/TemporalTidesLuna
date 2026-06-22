@@ -3,7 +3,7 @@ import pytest
 from src.gui import TemporalTidesLunaApp
 
 function_list = {
-	"controller": ["check_result", "on_submit"],
+	"controller": ["check_result", "on_submit", "is_this_one"],
 	"model": [],
 	"view": ["_show_display"],
 	}
@@ -21,4 +21,11 @@ class TestTemporalTidesLunaApp:
 			sub_class = getattr(temporal_tides_app, part)
 			for function in functions:			
 				assert hasattr(sub_class, function)
+
+	def test_controller(self, temporal_tides_app):
+
+		controller = temporal_tides_app.controller
+
+		assert controller.is_this_one() == 1
+		assert controller.is_this_one(1) == 2
 

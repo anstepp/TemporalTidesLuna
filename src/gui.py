@@ -35,10 +35,14 @@ class TemporalTidesLunaApp(tk.Tk):
             self.presenter = None
 
             self._show_display()
+            self.remove_short_rests = tk.BooleanVar()
+            self.simplify_tuplets = tk.BooleanVar()
+            self.replace_grace_notes = tk.BooleanVar()
+            self.combine_redundant_notes = tk.BooleanVar()
 
         def _show_display(self):
             pass
-    
+        
     # Model
     class TemporalTidesModel:
         """
@@ -61,10 +65,7 @@ class TemporalTidesLunaApp(tk.Tk):
         """
         def __init__(self):
             self.var = 1
-            self.remove_short_rests = tk.BooleanVar()
-            self.simplify_tuplets = tk.BooleanVar()
-            self.replace_grace_notes = tk.BooleanVar()
-            self.tie_redundant_notes = tk.BooleanVar()
+
 
         def on_submit(self, result_container):
             # Perform your operational check
@@ -78,9 +79,7 @@ class TemporalTidesLunaApp(tk.Tk):
                 result_container["msg"] = "Not String"
                 # Keep GUI open for another attempt
         def button_check(self):
-             r = {self.remove_short_rests, self.simplify_tuplets, 
-                  self.replace_grace_notes, self.tie_redundant_notes}
-             return r
+            assert isinstance(self.view.remove_short_rests.get(), bool)
             
         def check_result(self, state):
             return state

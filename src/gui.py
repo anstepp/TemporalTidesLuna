@@ -51,7 +51,7 @@ class TemporalTidesLunaApp(tk.Tk):
         def __init__(self):
             self.remove_short_rests = tk.BooleanVar()
             self.simplify_tuplets = tk.BooleanVar()
-            self.replace_grace_notes = tk.BooleanVar()
+            self.replace_rests = tk.BooleanVar()
             self.combine_redundant_notes = tk.BooleanVar()
             pass
 
@@ -70,7 +70,11 @@ class TemporalTidesLunaApp(tk.Tk):
         def get_short_rest_bool(self, model):
             self.remove_short_rests_cont = model.remove_short_rests.get()
             return self.remove_short_rests_cont
-            
+
+        def get_replace_rests_bool(self, model):
+            replace = model.replace_rests.get()  
+            if replace:
+                return replace 
             
         def on_submit(self, result_container):
             # Perform your operational check

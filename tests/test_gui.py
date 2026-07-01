@@ -28,3 +28,8 @@ class TestTemporalTidesLunaApp:
 		temporal_tides_app.model.remove_short_rests.set(False)
 		assert False == temporal_tides_app.controller.get_short_rest_bool(temporal_tides_app.model)
 
+	def test_replace_rests(self, temporal_tides_app):
+		temporal_tides_app.model.replace_rests.set(True)
+		assert temporal_tides_app.controller.get_replace_rests_bool(temporal_tides_app.model)
+		
+

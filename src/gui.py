@@ -55,6 +55,19 @@ class TemporalTidesLunaApp(tk.Tk):
             self.combine_redundant_notes = tk.BooleanVar()
             pass
 
+        def on_start(self, controller):
+            replace_rests = controller.get_replace_rests_bool(self)
+            simplify_tuplets = controller.get_simplify_tuplets_bool(self)
+            remove_short_rests = controller.get_simplify_tuplets_bool(self)
+            if replace_rests:
+                #for note in .xml
+                    #if note should be a rest:
+                        #note.make_rest()
+                pass
+            return replace_rests and simplify_tuplets and remove_short_rests
+            
+            # Not sure if I have the right idea here, as it is supposed to run on "submitting" the whole GUI, but I am not sure if this is right
+
     # Controller
     class TemporalTidesController:
         """
@@ -72,9 +85,12 @@ class TemporalTidesLunaApp(tk.Tk):
             return self.remove_short_rests_cont
 
         def get_replace_rests_bool(self, model):
-            replace = model.replace_rests.get()  
-            if replace:
-                return replace 
+            replace = model.replace_rests.get() 
+            return replace 
+            
+        def get_simplify_tuplets_bool(self, model):
+            simplify = model.simplify_tuplets.get()
+            return simplify
             
         def on_submit(self, result_container):
             # Perform your operational check

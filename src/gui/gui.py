@@ -31,6 +31,12 @@ class TemporalTidesLunaApp(tk.Tk):
             self._grace_note_gui_bool = tk.BooleanVar()
             self._grace_note_flag = False
 
+            #staff reduction tool
+            self._staff_count = tk.IntVar()
+            self._desired_staff_count = tk.StringVar() # must cast later
+            self._staff_reduction_toggle = tk.BooleanVar()
+            self._staff_reduction_data = (0, 0, False) # Default, must fail on this combo for now; is staff_count, desired_count, toggle
+
     #View
     class TemporalTidesView:
         """
@@ -49,6 +55,8 @@ class TemporalTidesLunaApp(tk.Tk):
             self.model = model
 
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
+            self.desired_staff_count = tk.Entry(root, width=2, textvariable=model._desired_staff_count)
+            self.staff_reduce_toggle = tk.Checkbutton(root, text="Staff Reduction On/Off", variable=model._staff_reduction_toggle)
 
             self.presenter = None
 
@@ -102,3 +110,11 @@ class TemporalTidesLunaApp(tk.Tk):
             """
             self.model._grace_note_flag = self.model._grace_note_gui_bool.get()
 
+        def _set_staff_reduction_data(self):
+            current_staves = self.model._staff_count.get()
+            desired_staves = int(self.model._desired_staff_count.get()) #cast here for now
+            toggle = self.model._staff_reduction_toggle.get()
+
+            self.model._staff_reduction_data = (current_staves, desired_staves, toggle)
+
+            return self.model._staff_reduction_data

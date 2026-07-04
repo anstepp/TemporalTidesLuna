@@ -3,7 +3,7 @@ import pytest
 from gui.gui import TemporalTidesLunaApp
 
 function_list = {
-	"controller": ["check_result", "on_submit", "_get_grace_note_flag"],
+	"controller": ["check_result", "on_submit", "_get_grace_note_flag", "_set_staff_reduction_data"],
 	"model": [],
 	"view": ["_show_display"],
 	}
@@ -29,3 +29,16 @@ class TestTemporalTidesLunaApp:
         assert temporal_tides_app.model._grace_note_gui_bool.get() == True
         temporal_tides_app.controller._get_grace_note_flag()
         assert temporal_tides_app.model._grace_note_flag == True
+
+    def test_staff_reduction_data_set(self, temporal_tides_app):
+        #test inital conditions
+        assert temporal_tides_app.model._staff_reduction_data == (0,0,False)
+
+        # manually set test values
+        temporal_tides_app.model._staff_count.set(2)
+        temporal_tides_app.model._desired_staff_count.set("1")
+        temporal_tides_app.model._staff_reduction_toggle.set(True)
+
+        # run and test function
+        temporal_tides_app.controller._set_staff_reduction_data()
+        assert temporal_tides_app.model._staff_reduction_data == (2,1,True)

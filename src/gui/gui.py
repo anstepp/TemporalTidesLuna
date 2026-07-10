@@ -12,10 +12,24 @@ class TemporalTidesLunaApp(tk.Tk):
         super().__init__(parent)
         self.parent = parent
         self.title("Temporal Tides Luna")
-        self.infile = tk.StringVar()
-        self.view = self.TemporalTidesView()
         self.model = self.TemporalTidesModel()
-        self.controller = self.TemporalTidesController()
+        self.view = self.TemporalTidesView(self.model)
+        self.controller = self.TemporalTidesController(self.model, self.view)
+
+    # Model
+    class TemporalTidesModel:
+        """
+            Logic here. We will keep lejaren imports at a minimum, and do that work in separate files.
+
+            Functions:
+            
+                init = constructor
+        """
+        def __init__(self):
+
+            #grace note data
+            self._grace_note_gui_bool = tk.BooleanVar()
+            self._grace_note_flag = False
 
     #View
     class TemporalTidesView:
@@ -29,8 +43,12 @@ class TemporalTidesLunaApp(tk.Tk):
                 _show_display = show the gui
                     args: none
         """
-        def __init__(self):
+        def __init__(self, model):
             super().__init__()
+
+            self.model = model
+
+            self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
 
             self.presenter = None
 
@@ -38,22 +56,7 @@ class TemporalTidesLunaApp(tk.Tk):
 
         def _show_display(self):
             pass
-        
-    # Model
-    class TemporalTidesModel:
-        """
-            Logic here. We will keep lejaren imports at a minimum, and do that work in separate files.
-
-            Functions:
-            
-                init = constructor
-        """
-        def __init__(self):
-            self.remove_short_rests = tk.BooleanVar()
-            self.simplify_tuplets = tk.BooleanVar()
-            self.replace_grace_notes = tk.BooleanVar()
-            self.combine_redundant_notes = tk.BooleanVar()
-            pass
+    
 
     # Controller
     class TemporalTidesController:
@@ -63,15 +66,11 @@ class TemporalTidesLunaApp(tk.Tk):
             Functions:
                 init = constructor
         """
-        def __init__(self):
+        def __init__(self, model, view): 
             self.var = 1
-            self.remove_short_rests_cont = False
-        
-        def get_short_rest_bool(self, model):
-            self.remove_short_rests_cont = model.remove_short_rests.get()
-            return self.remove_short_rests_cont
-            
-            
+            self.model = model
+            self.view = view
+
         def on_submit(self, result_container):
             # Perform your operational check
             if isinstance(self.infile.get(), str):
@@ -83,9 +82,23 @@ class TemporalTidesLunaApp(tk.Tk):
                 result_container["success"] = False
                 result_container["msg"] = "Not String"
                 # Keep GUI open for another attempt
-        def button_check(self):
-            pass
-            
+
         def check_result(self, state):
             return state
+        
+        def is_this_one(self, add_int=0) -> int:
+            return self.var + add_int
+        
+        # return nothing; simply update on call (helper function)
+        def _get_grace_note_flag(self):
+            """
+                Helper function to get active grace note toggle.
+
+                Args:
+                    self: (the Controller)
+
+                Returns:
+                    None -> should be updated if we need to pass value instead
+            """
+            self.model._grace_note_flag = self.model._grace_note_gui_bool.get()
 

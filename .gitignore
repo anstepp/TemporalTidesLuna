@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Nuke DS_Store (macos)
+*.DS_Store
+
+# Nuke VS Code settings
+.vscode
+
 # Distribution / packaging
 .Python
 build/

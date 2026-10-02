@@ -13,8 +13,11 @@ class TemporalTidesLunaApp(tk.Tk):
         self.parent = parent
         self.title("Temporal Tides Luna")
         self.model = self.TemporalTidesModel()
-        self.view = self.TemporalTidesView(self.model)
+        self.view = self.TemporalTidesView(self.model, self.load_files)
         self.controller = self.TemporalTidesController(self.model, self.view)
+
+    def load_files(self):
+        self.controller.on_submit()
 
     # Model
     class TemporalTidesModel:
@@ -53,10 +56,12 @@ class TemporalTidesLunaApp(tk.Tk):
                 _show_display = show the gui
                     args: none
         """
-        def __init__(self, model):
+        def __init__(self, model, load_callback):
             super().__init__()
 
             self.model = model
+
+            model._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
 
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
 
@@ -94,9 +99,6 @@ class TemporalTidesLunaApp(tk.Tk):
 
         def check_result(self, state):
             return state
-        
-        def is_this_one(self, add_int=0) -> int:
-            return self.var + add_int
         
         # return nothing; simply update on call (helper function)
         def _get_grace_note_flag(self):

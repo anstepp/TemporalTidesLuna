@@ -27,9 +27,19 @@ class TemporalTidesLunaApp(tk.Tk):
         """
         def __init__(self):
 
+            #ingested file array
+            self._ingested_files = []
+
             #grace note data
             self._grace_note_gui_bool = tk.BooleanVar()
             self._grace_note_flag = False
+            #tuplet flag and max
+            self._tuplet_gui_bool = tk.BooleanVar()
+            self._tuplet_flag = False
+            self._tuplet_gui_max = tk.IntVar()
+            self._tuplet_max = 1 #TODO: must be int, verify
+            #
+
 
     #View
     class TemporalTidesView:
@@ -67,7 +77,6 @@ class TemporalTidesLunaApp(tk.Tk):
                 init = constructor
         """
         def __init__(self, model, view): 
-            self.var = 1
             self.model = model
             self.view = view
 

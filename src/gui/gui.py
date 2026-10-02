@@ -88,7 +88,7 @@ class TemporalTidesLunaApp(tk.Tk):
         def on_submit(self, result_container):
             # Perform your operational check
             if isinstance(self.infile.get(), str):
-                if re_search(r'*\.musicxml', self.infile.get()):
+                if re_search(r'input*\.musicxml', self.infile.get()):
                     result_container["success"] = True
                     result_container["msg"] = "Actual Music XML File"
                     root.destroy() 

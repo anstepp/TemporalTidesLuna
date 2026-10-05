@@ -1,20 +1,20 @@
 from re import search as re_search 
+import os
 
 import tkinter as tk
-
-global root
-root = tk.Tk()
 
 state = {"success": None, "msg": ""}
 
 class TemporalTidesLunaApp(tk.Tk):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.parent = parent
+    def __init__(self):
+        super().__init__()
         self.title("Temporal Tides Luna")
         self.model = self.TemporalTidesModel()
-        self.view = self.TemporalTidesView(self.model)
+        self.view = self.TemporalTidesView(self, self.model, self.load_files)
         self.controller = self.TemporalTidesController(self.model, self.view)
+
+    def load_files(self):
+        self.controller.on_submit()
 
     # Model
     class TemporalTidesModel:
@@ -27,9 +27,19 @@ class TemporalTidesLunaApp(tk.Tk):
         """
         def __init__(self):
 
+            #ingested file array
+            self._ingested_files = []
+
             #grace note data
             self._grace_note_gui_bool = tk.BooleanVar()
             self._grace_note_flag = False
+            #tuplet flag and max
+            self._tuplet_gui_bool = tk.BooleanVar()
+            self._tuplet_flag = False
+            self._tuplet_gui_max = tk.IntVar()
+            self._tuplet_max = 1 #TODO: must be int, verify
+            #
+
 
             #staff reduction tool
             self._staff_count = tk.IntVar()
@@ -38,7 +48,7 @@ class TemporalTidesLunaApp(tk.Tk):
             self._staff_reduction_data = (0, 0, False) # Default, must fail on this combo for now; is staff_count, desired_count, toggle
 
     #View
-    class TemporalTidesView:
+    class TemporalTidesView(tk.Frame):
         """
             Display GUI from here. No logic, no storage.
 
@@ -49,14 +59,26 @@ class TemporalTidesLunaApp(tk.Tk):
                 _show_display = show the gui
                     args: none
         """
-        def __init__(self, model):
-            super().__init__()
-
+        def __init__(self, root, model, load_callback):
+            super().__init__(root)
             self.model = model
 
+            model._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
+            model._ingested_files.pack()
+
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
-            self.desired_staff_count = tk.Entry(root, width=2, textvariable=model._desired_staff_count)
-            self.staff_reduce_toggle = tk.Checkbutton(root, text="Staff Reduction On/Off", variable=model._staff_reduction_toggle)
+            self.grace_note_toggle.pack()
+
+            self.tuplet_toggle = tk.Checkbutton(root, text="Tuplets On (see Max)", variable=model._tuplet_gui_bool)
+            self.tuplet_toggle.pack()
+
+            self.max_tuplet_val_label = tk.Label(root, text="Max Tuplets (3)")
+            self.max_tuplet_val_label.pack()
+            self.max_tuplet_val = tk.Entry(root, width=1)
+            self.max_tuplet_val.pack()
+
+            quit_button = tk.Button(root, text="Quit Application", command=root.destroy)
+            quit_button.pack()
 
             self.presenter = None
 
@@ -75,27 +97,25 @@ class TemporalTidesLunaApp(tk.Tk):
                 init = constructor
         """
         def __init__(self, model, view): 
-            self.var = 1
             self.model = model
             self.view = view
+            self.infile = "/input"
 
-        def on_submit(self, result_container):
+        def on_submit(self):
             # Perform your operational check
-            if isinstance(self.infile.get(), str):
-                if re_search(r'*\.musicxml', self.infile.get()):
-                    result_container["success"] = True
-                    result_container["msg"] = "Actual Music XML File"
-                    root.destroy() 
+            path = "./input" #local to app directory only
+            pattern = r'input\/[\w ]*\.musicxml'
+            matching_files = [
+                filename for filename in os.listdir(path) 
+                if re_search(pattern, filename) and os.path.isfile(os.path.join(path, filename))
+            ]
+            if matching_files:
+                for file in matching_files:
+                    print(file)
             else:
-                result_container["success"] = False
-                result_container["msg"] = "Not String"
-                # Keep GUI open for another attempt
-
+                print("No Files")
         def check_result(self, state):
             return state
-        
-        def is_this_one(self, add_int=0) -> int:
-            return self.var + add_int
         
         # return nothing; simply update on call (helper function)
         def _get_grace_note_flag(self):
@@ -110,11 +130,5 @@ class TemporalTidesLunaApp(tk.Tk):
             """
             self.model._grace_note_flag = self.model._grace_note_gui_bool.get()
 
-        def _set_staff_reduction_data(self):
-            current_staves = self.model._staff_count.get()
-            desired_staves = int(self.model._desired_staff_count.get()) #cast here for now
-            toggle = self.model._staff_reduction_toggle.get()
-
-            self.model._staff_reduction_data = (current_staves, desired_staves, toggle)
-
-            return self.model._staff_reduction_data
+app = TemporalTidesLunaApp()
+app.mainloop()

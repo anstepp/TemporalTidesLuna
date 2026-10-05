@@ -8,6 +8,12 @@ function_list = {
 	"view": ["_show_display"],
 	}
 
+var_list = {
+	"model": ["_ingested_files", "_grace_note_gui_bool", "_grace_note_flag", "_tuplet_gui_bool", "_tuplet_flag", "_tuplet_gui_max", "_tuplet_max"],
+	"view": ["grace_note_toggle", "presenter"],
+	"controller": ["model", "view"],
+	}
+
 class TestTemporalTidesLunaApp:
 
     def test_app_instantiated(self, temporal_tides_app):
@@ -21,6 +27,13 @@ class TestTemporalTidesLunaApp:
             sub_class = getattr(temporal_tides_app, part)
             for function in functions:			
                 assert hasattr(sub_class, function)
+
+    def test_variables_present(self, temporal_tides_app):
+        for part, vars in var_list.items():
+            assert hasattr(temporal_tides_app, part)
+            sub_class = getattr(temporal_tides_app, part)
+            for var in vars:			
+                assert hasattr(sub_class, var)
 
     def test_grace_notes(self, temporal_tides_app):
         assert temporal_tides_app.model._grace_note_flag == False

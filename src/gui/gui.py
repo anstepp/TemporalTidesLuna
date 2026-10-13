@@ -67,33 +67,41 @@ class TemporalTidesLunaApp(tk.Tk):
 
             #input
             model._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
-            model._ingested_files.pack()
+            model._ingested_files.grid(row=0,column=0)
 
             #Grace Notes
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
-            self.grace_note_toggle.pack()
+            self.grace_note_toggle.grid(row=1,column=0)
 
             #Tuplet Toggle
             self.tuplet_toggle = tk.Checkbutton(root, text="Tuplets On (see Max)", variable=model._tuplet_gui_bool)
-            self.tuplet_toggle.pack()
+            self.tuplet_toggle.grid(row=2,column=0)
 
             #Tuplets
             self.max_tuplet_val_label = tk.Label(root, text="Max Tuplets (3)")
-            self.max_tuplet_val_label.pack()
+            self.max_tuplet_val_label.grid(row=3,column=0)
             self.max_tuplet_val = tk.Entry(root, width=1)
-            self.max_tuplet_val.pack()
+            self.max_tuplet_val.grid(row=3,column=1)
 
             #Note multiplier
+            self.max_tuplet_val_label = tk.Label(root, text="Note Multiplier")
+            self.max_tuplet_val_label.grid(row=4,column=0)
+            self.max_tuplet_val_label = tk.Label(root, text="Multiplier Value:")
+            self.max_tuplet_val_label.grid(row=5,column=0)
             self.multiper_val = tk.Entry(root, width=3)
-            self.multiper_val.pack()
+            self.multiper_val.grid(row=5,column=1)
+            self.max_tuplet_val_label = tk.Label(root, text="Measure Range (Min)")
+            self.max_tuplet_val_label.grid(row=6,column=0)
             self.multiper_val_range_min = tk.Entry(root, width=3)
-            self.multiper_val_range_min.pack()
+            self.multiper_val_range_min.grid(row=6,column=1)
+            self.max_tuplet_val_label = tk.Label(root, text="Measure Range (Max)")
+            self.max_tuplet_val_label.grid(row=7,column=0)
             self.multiper_val_range_max = tk.Entry(root, width=3)
-            self.multiper_val_range_max.pack()
+            self.multiper_val_range_max.grid(row=7,column=1)
 
             #Quit
             quit_button = tk.Button(root, text="Quit Application", command=root.destroy)
-            quit_button.pack()
+            quit_button.grid(row=8,column=0)
 
             self.presenter = None
 

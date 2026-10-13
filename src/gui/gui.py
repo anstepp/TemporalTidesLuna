@@ -43,6 +43,10 @@ class TemporalTidesLunaApp(tk.Tk):
             self._note_multiplier_flag = False
             self._note_multiplier_gui_val = tk.DoubleVar()
             self._note_multiplier_val = 1 #Multiple by 1 to maintain please
+            self._note_multiplier_gui_range_min = tk.DoubleVar()
+            self._note_multiplier_gui_range_max = tk.DoubleVar()
+            self._note_multiplier_range_min = 0
+            self._note_multiplier_range_max = 1 # set to max measure on default?
 
 
     #View

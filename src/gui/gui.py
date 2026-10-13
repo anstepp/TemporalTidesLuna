@@ -65,15 +65,19 @@ class TemporalTidesLunaApp(tk.Tk):
             super().__init__(root)
             self.model = model
 
+            #input
             model._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
             model._ingested_files.pack()
 
+            #Grace Notes
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
             self.grace_note_toggle.pack()
 
+            #Tuplet Toggle
             self.tuplet_toggle = tk.Checkbutton(root, text="Tuplets On (see Max)", variable=model._tuplet_gui_bool)
             self.tuplet_toggle.pack()
 
+            #Tuplets
             self.max_tuplet_val_label = tk.Label(root, text="Max Tuplets (3)")
             self.max_tuplet_val_label.pack()
             self.max_tuplet_val = tk.Entry(root, width=1)

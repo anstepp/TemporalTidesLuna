@@ -112,12 +112,12 @@ class TemporalTidesLunaApp(tk.Tk):
         def __init__(self, model, view): 
             self.model = model
             self.view = view
-            self.infile = "/input"
+            self.infile = "./input"
 
         def on_submit(self):
             # Perform your operational check
-            path = "./input" #local to app directory only
-            pattern = r'input\/[\w ]*\.musicxml'
+            path = self.infile #local to app directory only
+            pattern = r'[\w ]*\.musicxml'
             matching_files = [
                 filename for filename in os.listdir(path) 
                 if re_search(pattern, filename) and os.path.isfile(os.path.join(path, filename))

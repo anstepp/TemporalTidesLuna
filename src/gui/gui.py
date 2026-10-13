@@ -122,6 +122,7 @@ class TemporalTidesLunaApp(tk.Tk):
             self.model = model
             self.view = view
             self.infile = "./input" #Don't change to keep things sane
+            self.outfile = "./output" #ditto to above line
             self.hooks = lh.LejarenHooks()
 
         def on_submit(self) -> None:
@@ -150,7 +151,7 @@ class TemporalTidesLunaApp(tk.Tk):
             self.hooks.create_output(self.infile, self.model._ingested_files)
 
         def write_files(self):
-            print("Writing Output")
+            self.hooks.write_output(self.outfile)
 
 
         

@@ -6,7 +6,7 @@ from lejaren.notation import score as ljns
 class LejarenHooks:
 
     def __init__(self):
-        pass
+        self.score_list = []
 
     # TODO: Add features here
     def create_output(self, input_dir, fname_list): # -> None or Bool on Success
@@ -19,7 +19,15 @@ class LejarenHooks:
             else:
                 temp_tree = etree.parse(input_dir+"/"+fname)
                 temp_root = etree.getroot()
-                ljns.Score(temp_tree)
+                self.score_list.append([ljns.Score(temp_tree),fname])
                 print("Yay")
 
+    def write_output(self, output_dir): # -> None or Bool on Success
+
+        for score in self.score_list:
+            if not isinstance(score[0], ljns.Score):
+                raise TypeError(f"Not a Score, file is: {type(score)} instead")
+            else:
+                score.convert_to_xml(output_dir+"/"+score[1])
+                print("Yay")
         

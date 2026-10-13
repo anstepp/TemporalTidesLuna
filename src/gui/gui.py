@@ -78,7 +78,7 @@ class TemporalTidesLunaApp(tk.Tk):
             #Tuplets
             self.max_tuplet_val_label = tk.Label(root, text="Max Tuplets (3)")
             self.max_tuplet_val_label.grid(row=3,column=0)
-            self.max_tuplet_val = tk.Entry(root, width=1)
+            self.max_tuplet_val = tk.Entry(root, width=1, textvariable=self.model._tuplet_gui_max)
             self.max_tuplet_val.grid(row=3,column=1)
 
             #Note multiplier
@@ -86,28 +86,20 @@ class TemporalTidesLunaApp(tk.Tk):
             self.max_tuplet_val_label.grid(row=4,column=0)
             self.max_tuplet_val_label = tk.Label(root, text="Multiplier Value:")
             self.max_tuplet_val_label.grid(row=5,column=0)
-            self.multiper_val = tk.Entry(root, width=3)
+            self.multiper_val = tk.Entry(root, width=3, textvariable=self.model._note_multiplier_gui_val)
             self.multiper_val.grid(row=5,column=1)
             self.max_tuplet_val_label = tk.Label(root, text="Measure Range (Min)")
             self.max_tuplet_val_label.grid(row=6,column=0)
-            self.multiper_val_range_min = tk.Entry(root, width=3)
+            self.multiper_val_range_min = tk.Entry(root, width=3, textvariable=self.model._note_multiplier_gui_range_min)
             self.multiper_val_range_min.grid(row=6,column=1)
             self.max_tuplet_val_label = tk.Label(root, text="Measure Range (Max)")
             self.max_tuplet_val_label.grid(row=7,column=0)
-            self.multiper_val_range_max = tk.Entry(root, width=3)
+            self.multiper_val_range_max = tk.Entry(root, width=3, textvariable=self.model._note_multiplier_gui_range_max)
             self.multiper_val_range_max.grid(row=7,column=1)
 
             #Quit
             quit_button = tk.Button(root, text="Quit Application", command=root.destroy)
             quit_button.grid(row=8,column=0)
-
-            self.presenter = None
-
-            self._show_display()
-
-        def _show_display(self):
-            pass
-    
 
     # Controller
     class TemporalTidesController:

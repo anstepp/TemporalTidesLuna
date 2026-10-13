@@ -43,8 +43,8 @@ class TemporalTidesLunaApp(tk.Tk):
             self._note_multiplier_flag = False
             self._note_multiplier_gui_val = tk.DoubleVar()
             self._note_multiplier_val = 1 #Multiple by 1 to maintain please
-            self._note_multiplier_gui_range_min = tk.DoubleVar()
-            self._note_multiplier_gui_range_max = tk.DoubleVar()
+            self._note_multiplier_gui_range_min = tk.IntVar()
+            self._note_multiplier_gui_range_max = tk.IntVar()
             self._note_multiplier_range_min = 0
             self._note_multiplier_range_max = 1 # set to max measure on default?
 
@@ -83,6 +83,15 @@ class TemporalTidesLunaApp(tk.Tk):
             self.max_tuplet_val = tk.Entry(root, width=1)
             self.max_tuplet_val.pack()
 
+            #Note multiplier
+            self.multiper_val = tk.Entry(root, width=3)
+            self.multiper_val.pack()
+            self.multiper_val_range_min = tk.Entry(root, width=3)
+            self.multiper_val_range_min.pack()
+            self.multiper_val_range_max = tk.Entry(root, width=3)
+            self.multiper_val_range_max.pack()
+
+            #Quit
             quit_button = tk.Button(root, text="Quit Application", command=root.destroy)
             quit_button.pack()
 

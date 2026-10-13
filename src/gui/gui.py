@@ -38,7 +38,11 @@ class TemporalTidesLunaApp(tk.Tk):
             self._tuplet_flag = False
             self._tuplet_gui_max = tk.IntVar()
             self._tuplet_max = 1 #TODO: must be int, verify
-            #
+            # multiply note value
+            self._note_multiplier_gui_bool = tk.BooleanVar()
+            self._note_multiplier_flag = False
+            self._note_multiplier_gui_val = tk.DoubleVar()
+            self._note_multiplier_val = 1 #Multiple by 1 to maintain please
 
 
     #View

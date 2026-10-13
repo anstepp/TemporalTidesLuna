@@ -3,16 +3,21 @@ import os
 
 import tkinter as tk
 
+import lejaren_hooks as lh
+
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Temporal Tides Luna")
         self.model = self.TemporalTidesModel()
-        self.view = self.TemporalTidesView(self, self.model, self.load_files)
+        self.view = self.TemporalTidesView(self, self.model, self.load_files, self.write_files)
         self.controller = self.TemporalTidesController(self.model, self.view)
 
     def load_files(self):
         self.controller.on_submit()
+
+    def write_files(self):
+        self.controller.write_files()
 
     # Model
     class TemporalTidesModel:
@@ -59,13 +64,13 @@ class TemporalTidesLunaApp(tk.Tk):
                 _show_display = show the gui
                     args: none
         """
-        def __init__(self, root, model, load_callback):
+        def __init__(self, root, model, load_callback, write_callback):
             super().__init__(root)
             self.model = model
 
             #input
-            model._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
-            model._ingested_files.grid(row=0,column=0)
+            self._ingested_files = tk.Button(root, text="Load files in /input directory", command=load_callback)
+            self._ingested_files.grid(row=0,column=0)
 
             #Grace Notes
             self.grace_note_toggle = tk.Checkbutton(root, text="Grace Notes On/Off", variable=model._grace_note_gui_bool)
@@ -98,8 +103,12 @@ class TemporalTidesLunaApp(tk.Tk):
             self.multiper_val_range_max.grid(row=7,column=1)
 
             #Quit
+            output_button = tk.Button(root, text="Write Files", command=write_callback)
+            output_button.grid(row=8,column=0)
+
+            #Quit
             quit_button = tk.Button(root, text="Quit Application", command=root.destroy)
-            quit_button.grid(row=8,column=0)
+            quit_button.grid(row=9,column=0)
 
     # Controller
     class TemporalTidesController:
@@ -112,23 +121,39 @@ class TemporalTidesLunaApp(tk.Tk):
         def __init__(self, model, view): 
             self.model = model
             self.view = view
-            self.infile = "/input"
+            self.infile = "./input" #Don't change to keep things sane
+            self.outfile = "./output" #ditto to above line
+            self.hooks = lh.LejarenHooks()
 
-        def on_submit(self):
-            # Perform your operational check
-            path = "./input" #local to app directory only
-            pattern = r'input\/[\w ]*\.musicxml'
+        def on_submit(self) -> None:
+            """
+                Pulls files from input directory, loads them into app-wide
+                list.
+
+                args: None
+                returns: None (adjusts list)
+            """
+            path = self.infile #local to app directory only
+            pattern = r'[\w ]*\.musicxml'
             matching_files = [
                 filename for filename in os.listdir(path) 
                 if re_search(pattern, filename) and os.path.isfile(os.path.join(path, filename))
             ]
             if matching_files:
                 for file in matching_files:
-                    print(file)
+                    self.model._ingested_files.append(file)
+                    
             else:
                 print("No Files")
-        def check_result(self, state):
-            return state
+            self._load_to_lejaren()
+
+        def _load_to_lejaren(self):
+            self.hooks.create_output(self.infile, self.model._ingested_files)
+
+        def write_files(self):
+            self.hooks.write_output(self.outfile)
+
+
         
         # return nothing; simply update on call (helper function)
         def _get_grace_note_flag(self):

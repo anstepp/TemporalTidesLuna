@@ -1,6 +1,6 @@
 import pytest
 
-from src.lejaren_hooks import LejarenHooks
+from src.gui.lejaren_hooks import LejarenHooks
 
 def test_create_output():
 

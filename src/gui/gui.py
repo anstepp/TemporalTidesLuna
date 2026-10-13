@@ -3,8 +3,6 @@ import os
 
 import tkinter as tk
 
-state = {"success": None, "msg": ""}
-
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):
         super().__init__()

@@ -3,7 +3,7 @@ import os
 
 import tkinter as tk
 
-import src.gui.lejaren_hooks as lh
+import lejaren_hooks as lh
 
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):

@@ -12,8 +12,11 @@ dependencies = [
     "numpy (>=2.4.6,<3.0.0)",
     "scipy (>=1.17.1,<2.0.0)",
     "lxml (>=6.1.3,<7.0.0)",
-    "lejaren @ file:///Users/aaronstepp/Documents/Programming/TemporalTidesLuna/lejaren"
 ]
+
+[tool.poetry.dependencies]
+package-name = { git = "https://github.com", subdirectory = "./lejaren" }
+
 
 [tool.poetry]
 package-mode = false

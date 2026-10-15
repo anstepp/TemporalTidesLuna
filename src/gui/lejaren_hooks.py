@@ -19,7 +19,7 @@ class LejarenHooks:
             else:
                 temp_tree = etree.parse(input_dir+"/"+fname)
                 temp_root = temp_tree.getroot()
-                self.score_list.append([ljns.Score(temp_tree),fname])
+                score = ljns.Score(temp_tree)
                 print("Yay")
 
     def write_output(self, output_dir): # -> None or Bool on Success

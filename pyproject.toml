@@ -6,12 +6,13 @@ authors = [
     {name = "anstepp",email = "stepp.aaron@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.14,<4.0"
 dependencies = [
     "pytest (>=9.0.3,<10.0.0)",
     "numpy (>=2.4.6,<3.0.0)",
     "scipy (>=1.17.1,<2.0.0)",
-    "lxml (>=6.1.3,<7.0.0)"
+    "lxml (>=6.1.3,<7.0.0)",
+    "lejaren @ file:///Users/aaronstepp/Documents/Programming/TemporalTidesLuna/lejaren"
 ]
 
 [tool.poetry]

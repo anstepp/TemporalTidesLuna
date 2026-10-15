@@ -153,7 +153,6 @@ class TemporalTidesLunaApp(tk.Tk):
         def write_files(self):
             self.hooks.write_output(self.outfile)
 
-
         
         # return nothing; simply update on call (helper function)
         def _get_grace_note_flag(self):

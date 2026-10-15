@@ -18,7 +18,7 @@ class LejarenHooks:
                 raise ValueError(f"Not a musicxml file: {fname}")
             else:
                 temp_tree = etree.parse(input_dir+"/"+fname)
-                temp_root = etree.getroot()
+                temp_root = temp_tree.getroot()
                 self.score_list.append([ljns.Score(temp_tree),fname])
                 print("Yay")
 

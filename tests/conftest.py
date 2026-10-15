@@ -1,7 +1,7 @@
 import pytest
 import tkinter as tk
 
-from gui.gui import TemporalTidesLunaApp
+from src.gui.gui import TemporalTidesLunaApp
 
 @pytest.fixture(scope="class")
 def temporal_tides_app(request):

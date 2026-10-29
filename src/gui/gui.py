@@ -16,6 +16,7 @@ class TemporalTidesLunaApp(tk.Tk):
         self.model = self.TemporalTidesModel()
         self.view = self.TemporalTidesView(self, self.model, self.load_files, self.write_files)
         self.controller = self.TemporalTidesController(self.model, self.view)
+        print(f"App created, model:{self.model}, view:{self.view}, controller:{self.controller}")
 
     def load_files(self):
         self.controller.on_submit()

@@ -1,16 +1,16 @@
 import pytest
 
-from gui.gui import TemporalTidesLunaApp
+from src.gui.gui import TemporalTidesLunaApp
 
 function_list = {
-	"controller": ["check_result", "on_submit", "_get_grace_note_flag"],
+	"controller": ["on_submit", "_get_grace_note_flag", "_load_to_lejaren", "write_files"],
 	"model": [],
-	"view": ["_show_display"],
+	"view": [],
 	}
 
 var_list = {
 	"model": ["_ingested_files", "_grace_note_gui_bool", "_grace_note_flag", "_tuplet_gui_bool", "_tuplet_flag", "_tuplet_gui_max", "_tuplet_max"],
-	"view": ["grace_note_toggle", "presenter"],
+	"view": ["grace_note_toggle"],
 	"controller": ["model", "view"],
 	}
 

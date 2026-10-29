@@ -3,7 +3,11 @@ import os
 
 import tkinter as tk
 
-from . import lejaren_hooks as lh
+try:
+    from . import lejaren_hooks as lh
+except ImportError:
+    print("Lejaren failed to Import... Quitting")
+    raise SystemExit(1)
 
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):

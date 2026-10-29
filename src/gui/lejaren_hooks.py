@@ -19,8 +19,8 @@ class LejarenHooks:
             else:
                 temp_tree = etree.parse(input_dir+"/"+fname)
                 temp_root = temp_tree.getroot()
-                score = ljns.Score(temp_tree)
-                print("Yay")
+                temp_score = ljns.Score(temp_tree)
+                self.score_list.append([temp_score, fname])
 
     def write_output(self, output_dir): # -> None or Bool on Success
 
@@ -28,6 +28,5 @@ class LejarenHooks:
             if not isinstance(score[0], ljns.Score):
                 raise TypeError(f"Not a Score, file is: {type(score)} instead")
             else:
-                score.convert_to_xml(output_dir+"/"+score[1])
-                print("Yay")
+                score[0].convert_to_xml(output_dir+"/"+score[1])
         

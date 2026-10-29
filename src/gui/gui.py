@@ -3,7 +3,7 @@ import os
 
 import tkinter as tk
 
-import lejaren_hooks as lh
+from . import lejaren_hooks as lh
 
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):
@@ -167,5 +167,5 @@ class TemporalTidesLunaApp(tk.Tk):
             """
             self.model._grace_note_flag = self.model._grace_note_gui_bool.get()
 
-app = TemporalTidesLunaApp()
-app.mainloop()
+# app = TemporalTidesLunaApp()
+# app.mainloop()

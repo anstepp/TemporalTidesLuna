@@ -1,7 +1,7 @@
 import pytest
 import tkinter as tk
 
-from gui.gui import TemporalTidesLunaApp
+from src.gui.gui import TemporalTidesLunaApp
 
 @pytest.fixture(scope="class")
 def temporal_tides_app(request):
@@ -15,7 +15,8 @@ def temporal_tides_app(request):
     # TemporalTidesLunaApp calls `super().__init__(parent)` which expects
     # a screenName or None, not a Tk instance. Construct with `None` and
     # withdraw the resulting window so tests run headless.
-    app = TemporalTidesLunaApp(None)
+    app = TemporalTidesLunaApp()
+    #app.mainloop()
     try:
         app.withdraw()
     except Exception:

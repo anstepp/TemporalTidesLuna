@@ -1,12 +1,15 @@
 from re import search as re_search 
 import os
 
+# TODO: make logs easier to off/on...
+LOG = True
+
 import tkinter as tk
 
 try:
-    from . import lejaren_hooks as lh
-except ImportError:
-    print("Lejaren failed to Import... Quitting")
+    import src.hooks.lejaren_hooks as lh
+except ImportError as e:
+    print(f"Lejaren Hooks failed to Import, info {e}... Quitting")
     raise SystemExit(1)
 
 class TemporalTidesLunaApp(tk.Tk):
@@ -16,6 +19,8 @@ class TemporalTidesLunaApp(tk.Tk):
         self.model = self.TemporalTidesModel()
         self.view = self.TemporalTidesView(self, self.model, self.load_files, self.write_files)
         self.controller = self.TemporalTidesController(self.model, self.view)
+        if LOG:
+            print(f"App created, model:{self.model}, view:{self.view}, controller:{self.controller}")
 
     def load_files(self):
         self.controller.on_submit()
@@ -146,6 +151,8 @@ class TemporalTidesLunaApp(tk.Tk):
             if matching_files:
                 for file in matching_files:
                     self.model._ingested_files.append(file)
+                    if LOG:
+                        print(f"Ingested Files... f{file}...")
                     
             else:
                 print("No Files")
@@ -170,6 +177,3 @@ class TemporalTidesLunaApp(tk.Tk):
                     None -> should be updated if we need to pass value instead
             """
             self.model._grace_note_flag = self.model._grace_note_gui_bool.get()
-
-# app = TemporalTidesLunaApp()
-# app.mainloop()

@@ -1,7 +1,11 @@
 from re import search
 from lxml import etree
 
-from lejaren.notation import score as ljns
+try:
+    from lejaren.notation import score as ljns
+except ImportError as e:
+    print(f"Hooks failed import, details: {e}, quitting...")
+    raise SystemExit(1)
 
 class LejarenHooks:
 

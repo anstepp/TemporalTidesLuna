@@ -1,6 +1,6 @@
 import pytest
 
-from src.gui.lejaren_hooks import LejarenHooks
+from src.hooks.lejaren_hooks import LejarenHooks
 
 #xfail this until rewritten
 @pytest.mark.xfail

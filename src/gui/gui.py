@@ -61,6 +61,12 @@ class TemporalTidesLunaApp(tk.Tk):
             self._note_multiplier_range_max = 1 # set to max measure on default?
 
 
+            #staff reduction tool
+            self._staff_count = tk.IntVar()
+            self._desired_staff_count = tk.StringVar() # must cast later
+            self._staff_reduction_toggle = tk.BooleanVar()
+            self._staff_reduction_data = (0, 0, False) # Default, must fail on this combo for now; is staff_count, desired_count, toggle
+
     #View
     class TemporalTidesView(tk.Frame):
         """

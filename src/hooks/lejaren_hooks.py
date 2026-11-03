@@ -18,7 +18,7 @@ class LejarenHooks:
         for fname in fname_list:
             if not isinstance(fname, str):
                 raise TypeError(f"Not a filename, file is: {fname} instead")
-            elif search(r'[a-zA-Z0-9]*\.musicxml', fname) == None:
+            elif search(r'[a-zA-Z0-9]*\.(musicxml|mxml|xml)', fname) == None:
                 raise ValueError(f"Not a musicxml file: {fname}")
             else:
                 temp_tree = etree.parse(input_dir+"/"+fname)

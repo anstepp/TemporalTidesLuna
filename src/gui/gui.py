@@ -143,7 +143,7 @@ class TemporalTidesLunaApp(tk.Tk):
                 returns: None (adjusts list)
             """
             path = self.infile #local to app directory only
-            pattern = r'[\w ]*\.musicxml'
+            pattern = r'[\w ]*\.[musicxml|mxml|xml]'
             matching_files = [
                 filename for filename in os.listdir(path) 
                 if re_search(pattern, filename) and os.path.isfile(os.path.join(path, filename))

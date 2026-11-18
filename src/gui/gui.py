@@ -1,31 +1,35 @@
 from re import search as re_search 
 import os
-
-# TODO: make logs easier to off/on...
-LOG = True
-
 import tkinter as tk
+from src.logs.logger import logger
 
 try:
     import src.hooks.lejaren_hooks as lh
 except ImportError as e:
-    print(f"Lejaren Hooks failed to Import, info {e}... Quitting")
+    logger.critical(f"Lejaren Hooks failed to Import, info {e}... Quitting")
     raise SystemExit(1)
+else:
+    logger.debug("Hook import successful...")
 
 class TemporalTidesLunaApp(tk.Tk):
     def __init__(self):
+        logger.debug("***** GUI Launch *****")
         super().__init__()
         self.title("Temporal Tides Luna")
         self.model = self.TemporalTidesModel()
+        logger.debug("Model init...")
         self.view = self.TemporalTidesView(self, self.model, self.load_files, self.write_files)
+        logger.debug("View init...")
         self.controller = self.TemporalTidesController(self.model, self.view)
-        if LOG:
-            print(f"App created, model:{self.model}, view:{self.view}, controller:{self.controller}")
+        logger.debug("Controller init...")
+        logger.debug(f"App created, model:{self.model}, view:{self.view}, controller:{self.controller}")
 
     def load_files(self):
+        logger.debug("Loading file wrapper running...")
         self.controller.on_submit()
 
     def write_files(self):
+        logger.debug("Writing files wrapper running...")
         self.controller.write_files()
 
     # Model
@@ -39,6 +43,7 @@ class TemporalTidesLunaApp(tk.Tk):
         """
         def __init__(self):
 
+            logger.debug("Init model...")
             #ingested file array
             self._ingested_files = []
 
@@ -74,6 +79,7 @@ class TemporalTidesLunaApp(tk.Tk):
                     args: none
         """
         def __init__(self, root, model, load_callback, write_callback):
+            logger.debug("Init view...")
             super().__init__(root)
             self.model = model
 
@@ -128,6 +134,7 @@ class TemporalTidesLunaApp(tk.Tk):
                 init = constructor
         """
         def __init__(self, model, view): 
+            logger.debug("Init controller...")
             self.model = model
             self.view = view
             self.infile = "./input" #Don't change to keep things sane
@@ -142,6 +149,7 @@ class TemporalTidesLunaApp(tk.Tk):
                 args: None
                 returns: None (adjusts list)
             """
+            logger.debug("Running on_submit...")
             path = self.infile #local to app directory only
             pattern = r'[\w ]*\.[musicxml|mxml|xml]'
             matching_files = [
@@ -151,22 +159,25 @@ class TemporalTidesLunaApp(tk.Tk):
             if matching_files:
                 for file in matching_files:
                     self.model._ingested_files.append(file)
-                    if LOG:
-                        print(f"Ingested Files... f{file}...")
+                    logger.debug(f"Ingested Files... f{file}...")
                     
             else:
-                print("No Files")
+                files_only = "\n".join(item.name for item in self.infile.iterdir() if item.is_file())
+                logger.warning(f"No Files, contents {files_only}")
             self._load_to_lejaren()
 
         def _load_to_lejaren(self):
+            logger.debug(f"Loading into lejaren... {self.infile}")
             self.hooks.create_output(self.infile, self.model._ingested_files)
 
         def write_files(self):
+            logger.debug(f"Writing files... {self.outfile}")
             self.hooks.write_output(self.outfile)
 
         
         # return nothing; simply update on call (helper function)
         def _get_grace_note_flag(self):
+            logger.debug("Set grace note flag?")
             """
                 Helper function to get active grace note toggle.
 

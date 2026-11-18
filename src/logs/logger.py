@@ -7,7 +7,7 @@ import logging
 from pathlib import Path
 
 LOG_DIR = Path(__file__).resolve().parent
-LOG_FILE = LOG_DIR / "ttlog.log"
+LOG_FILE = LOG_DIR / "temporaltides.log"
 
 class AlwaysEnabledAdapter(logging.LoggerAdapter):
     def process(self, msg, kwargs):

@@ -3,28 +3,31 @@ from typing import Iterable
 
 from pathlib import Path
 
-import lejaren.log.log as ljlog
+import logging
+from pathlib import Path
 
-log_dir = ["src/logs/temporaltides.log", "src/logs/lejaren.log"]
+LOG_DIR = Path(__file__).resolve().parent
+LOG_FILE = LOG_DIR / "ttlog.log"
 
-def get_loggers() -> Iterable[logging.Logger]:
-    ttlogger = logging.getLogger("TTLogger")
-    ttlogger.setLevel(logging.DEBUG)
-    lejarenlogger = ljlog.get_logger()
-    return (ttlogger, lejarenlogger)
+class AlwaysEnabledAdapter(logging.LoggerAdapter):
+    def process(self, msg, kwargs):
+        self.logger.disabled = False
+        return msg, kwargs
 
-ttlogger, lejarenlogger = get_loggers()
+def _build_logger() -> AlwaysEnabledAdapter:
+    raw_logger = logging.getLogger("TTLogger")
+    raw_logger.setLevel(logging.DEBUG)
+    raw_logger.disabled = False
+    raw_logger.propagate = False
 
-def check_log():
-    if not Path(log_dir[0]):
-        ttlogger.debug(f"No Logs; creating... {log_dir}")
-        Path.touch(log_dir[0])
-        ttlogger.debug(f"Temporal Tides Log created...")
-    else:
-        ttlogger.debug(f"Logs prexisting; continuing...")
-    if not Path(log_dir[1]):
-        lejarenlogger.debug(f"No Logs; creating... {log_dir}")
-        Path.touch(log_dir[1])
-        lejarenlogger.debug(f"Temporal Tides Log created...")
-    else:
-        lejarenlogger.debug(f"Logs prexisting; continuing...")
+    if not raw_logger.handlers:
+        file_handler = logging.FileHandler(LOG_FILE, mode="w", encoding="utf-8")
+        file_handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        file_handler.setFormatter(formatter)
+        raw_logger.addHandler(file_handler)
+
+    return AlwaysEnabledAdapter(raw_logger, {})
+
+logger = _build_logger()
+

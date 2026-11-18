@@ -3,18 +3,17 @@ from typing import Iterable
 
 from pathlib import Path
 
-from lejaren.log import log as ljlog
+import lejaren.log.log as ljlog
 
 log_dir = ["src/logs/temporaltides.log", "src/logs/lejaren.log"]
 
 def get_loggers() -> Iterable[logging.Logger]:
     ttlogger = logging.getLogger("TTLogger")
     ttlogger.setLevel(logging.DEBUG)
-    ljlogger = ljlog.get_logger()
-    ljlogger.setLevel(logging.DEBUG)
-    return (ttlogger, ljlog)
+    lejarenlogger = ljlog.get_logger()
+    return (ttlogger, lejarenlogger)
 
-ttlogger, ljlog = get_loggers()
+ttlogger, lejarenlogger = get_loggers()
 
 def check_log():
     if not Path(log_dir[0]):
@@ -24,8 +23,8 @@ def check_log():
     else:
         ttlogger.debug(f"Logs prexisting; continuing...")
     if not Path(log_dir[1]):
-        ljlog.debug(f"No Logs; creating... {log_dir}")
+        lejarenlogger.debug(f"No Logs; creating... {log_dir}")
         Path.touch(log_dir[1])
-        ljlog.debug(f"Temporal Tides Log created...")
+        lejarenlogger.debug(f"Temporal Tides Log created...")
     else:
-        ljlog.debug(f"Logs prexisting; continuing...")
+        lejarenlogger.debug(f"Logs prexisting; continuing...")

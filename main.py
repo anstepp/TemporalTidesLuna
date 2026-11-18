@@ -6,6 +6,7 @@ from importlib.metadata import version
 
 from src.logs.logger import logger
 
+logger.debug("***** Temporal Tides App Launch *****")
 
 def is_venv_active() -> bool:
     return sys.prefix != sys.base_prefix

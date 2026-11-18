@@ -3,7 +3,7 @@
 import subprocess
 
 subprocess.run(["git", "submodule", "update", "--remote", "--merge"])
-subprocess.run(["pip", "install", "lejaren"])
+subprocess.run(["pip", "install", "./lejaren"])
 try:
     from src.gui.gui import TemporalTidesLunaApp
 except ImportError as e:
